@@ -22,6 +22,7 @@ async function initDB() {
           author VARCHAR(150) DEFAULT 'Admin',
           likes INTEGER NOT NULL DEFAULT 0,
           images TEXT[] DEFAULT ARRAY[]::text[],
+          parent_id INTEGER,
           created_at TIMESTAMP DEFAULT NOW(),
           updated_at TIMESTAMP DEFAULT NOW()
         );

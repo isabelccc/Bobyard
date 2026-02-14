@@ -1,6 +1,7 @@
 import React , {useState, useEffect} from 'react';
 import './CommentItem.css';
-import { editComment, deleteComment, toggleLike  } from '../services/api';
+import { editComment, deleteComment, toggleLike, addComment } from '../services/api';
+import CommentForm from './CommentForm';
 
 export default function CommentItem({comment, onUpdate, onDelete,onLike}){
     const [isEditing, setIsEditing] = useState(false);
@@ -36,6 +37,18 @@ export default function CommentItem({comment, onUpdate, onDelete,onLike}){
             console.error('Failed to handle like count', err)
         }
     }
+    const [replyingTo, setReplyingTo] = useState(null);
+    
+    
+    
+    const handleReply = () => {
+        if (replyingTo === comment.id){
+            setReplyingTo(null)
+        } else {
+            setReplyingTo(comment.id)
+        }
+    }
+    
     
     const handleDelete = async()=>{
         if (window.confirm('Are you sure you want to delete this comment?')){
@@ -53,48 +66,59 @@ export default function CommentItem({comment, onUpdate, onDelete,onLike}){
     return (
         <div className = "comment-item">
             <div className = "comment-header">
-                <span className = "comment-author">
-                    {comment.author}
+        <span className = "comment-author">
+            {comment.author}
 
-                </span> 
+        </span>
                 <span className = "comment-date"> {
-                    new Date(comment.created_at).toLocaleString()}
-                </span>
+                    new Date(comment.created_at).toLocaleString('en-US')}
+        </span>
                 {isEditing? (
                     <div>
                         <textarea value = {editText}
                         onChange = {(e)=> setEditText(e.target.value)}
-                        className='edit-textarea'/>
-                        <button onClick = {handleSave}>Save</button>
-                        <button onClick = {()=> setIsEditing(false)}>
+                        className='edit-box'/>
+                        <div className='edit-actions'>
+                        <button className = "primary-btn" onClick = {handleSave}>Save</button>
+                        <button className = "primary-btn" onClick = {()=> setIsEditing(false)}>
                             Cancel
                         </button>
-                    </div>
+                        </div>
+        </div>
                 ):(
                     <p className = "comment-text">{comment.text}</p>
                 )}
                 {comment.image && comment.images.length > 0 &&(
                     <div className='comment-images'>
-                        {comment.images.map((img,idx)=>(
+                    {comment.images.map((img,idx)=>(
                             <img key = {idx} src= {img} alt = {`Comment ${idx}`}/>
-                        ))}
+                    ))}
+                
+                    </div>
+                )}
+                {!isEditing && (
+                    <div className='comment-footer'>
+                        <span className='comment-likes'>
+                        ❤️ {comment.likes}
+                        </span>
+                        <div className = "comment-actions">
+                            <button onClick = {()=> setIsEditing(true) } className = "primary-btn">Edit</button>
+                            <button onClick ={handleDelete} className ="primary-btn">Delete</button>
+                            <button onClick = {handleLike} className = "primary-btn">
+                                {isLiked ? 'Unlike' : 'Like'}
+                            </button>
+                            <button className='primary-btn' onClick = {handleReply}> Reply</button>
+                        </div>
 
                     </div>
                 )}
-                <div className='comment-footer'>
-                    <span className='comment-likes'>
-                        {comment.likes}
-                    </span>
-                    <div className = "comment-actions">
-                        <button onClick = {()=> setIsEditing(true)}>Edit</button>
-                        <button onClick ={handleDelete} className ="delete-btn">Delete</button>
-                        <button onClick = {handleLike} className = "like-btn">
-                            {isLiked ? 'Unlike' : 'Like'}
-                        </button>
-
+                
+                {replyingTo === comment.id && (
+                    <div>
+                        <CommentForm parentId={comment.id} onAdd={onUpdate} />
+                        <button className="primary-btn" onClick={() => setReplyingTo(null)}>Cancel</button>
                     </div>
-
-                </div>
+                )}
 
             </div>
 

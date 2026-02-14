@@ -1,21 +1,66 @@
 
 .comment-item{
-    background:white;
-    border:1px solid lightgray;
-    border: radius 8px;
-    padding:16px;
-
-}
-.comment-header{
-
-}
-.comment-author{
+   
+    border: 1px solid grey;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    justify-content: center;
+    padding: 20px 20px 20px 20px;
+    background-color: lightblue;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+    
+    
 
 }
 .comment-date{
+    color:darkslategrey;
+    font-size: 15px;
+    padding:5px
+   
+
+}
+.comment-author{
+    color: #111;
+    font-weight: 700;
+    font-size: 20px;
 
 }
 
-div{
 
+.primary-btn{
+    background:white;
+    border: 1px solid #ddd;
+    border-radius:20px;
+    padding: 6px 12px
+
+}
+.primary-btn:hover {
+    background:lightcoral;
+  }
+
+
+
+.edit-box{
+    background-color: aliceblue;
+    border-radius: 12px;
+    padding: 10px ;
+    max-width: 520px;
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid rgba(0,0,0,.12);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+
+}
+
+.comment-actions{
+    display: flex;
+    gap: 8px;
+    margin-top:8px;
+}
+.edit-actions{
+    display: flex;
+    gap: 8px;
+    margin-top:8px;
 }
