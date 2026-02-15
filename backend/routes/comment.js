@@ -20,8 +20,8 @@ router.get('/', async (req, res) => {
 router.post('/', async(req, res)=>{
     try{
         const {text, author,images,likes} = req.body
-        if (!text) {
-            return res.status(400).json({ error: 'Text is required' });
+        if (!text && !images) {
+            return res.status(400).json({ error: 'Text or image is required' });
         }
        
         const result = await pool.query(
@@ -79,16 +79,27 @@ router.put('/:id', async(req, res)=>{
     try{
         const id = req.params.id 
         const text = req.body.text
-        if (!text){
-            return res.status(404).json({message: "No message provided"})
+        const images = req.body.images
+        
+        // Validation: Allow update if either text OR images are provided
+        const hasText = text && text.trim() !== '';
+        const hasImages = images && Array.isArray(images) && images.length > 0;
+        
+        if (!hasText && !hasImages){
+            return res.status(400).json({ error: 'Please provide text or images' })
         }
+        
+        // TODO: Update SQL to include images column
+        // HINT: Add images to UPDATE statement: SET text = $1, images = $2, updated_at = NOW()
+        // HINT: Add images to parameters array: [text, images || [], id]
+        // HINT: Current: Only updates text
+        // HINT: Updated: Updates both text and images
         const result = await pool.query(
             `UPDATE comments 
-            SET text = $1,
-            updated_at = NOW()
-            WHERE id = $2
+            SET text = $1, images = $2, updated_at = NOW()
+            WHERE id = $3
             RETURNING *`,
-            [text, id]
+            [text || '', images || [], id]
         )
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'comment not found' });
