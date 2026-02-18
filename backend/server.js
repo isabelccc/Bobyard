@@ -23,10 +23,7 @@ async function initDB() {
           likes INTEGER NOT NULL DEFAULT 0,
           images TEXT[] DEFAULT ARRAY[]::text[],
           created_at TIMESTAMP DEFAULT NOW(),
-          updated_at TIMESTAMP DEFAULT NOW(),
-          parent_id INTEGER,
-          is_pinned BOOLEAN DEFAULT FALSE,
-          status TEXT
+          updated_at TIMESTAMP DEFAULT NOW()
         );
       `);
       console.log('DB initialized: comments table ready');
