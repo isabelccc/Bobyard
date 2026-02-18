@@ -1,48 +1,95 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import './CommentForm.css';
 import { addComment } from '../services/api';
 
-export default function CommentForm({onAdd}){
+export default function CommentForm({ onAdd }) {
     const [textInput, setTextInput] = useState('');
     const [loading, setLoading] = useState(false);
+    const [selectedImages, setSelectedImages] = useState([])
+ 
     
-    const handleSubmit = async()=>{
+    
+    const handleImageUpload = async(e)=>{
+        const files = Array.from(e.target.files);
+        files.forEach(file =>{
+            const reader = new FileReader();
+            reader.onloadend =()=>{
+                setSelectedImages(prev => [...prev, reader.result])
+            };
+            reader.readAsDataURL(file);
+
+        })
+
+    }
+
+    const handleSubmit = async () => {
+       
+        
         // Validation
-        if (!textInput || textInput.trim() === ''){
-            console.error('Text input cannot be empty');
-            return;
+        const hasText = textInput && textInput.trim() !== '';
+        const hasImages = selectedImages && selectedImages.length >0
+        if (!hasImages && !hasText){
+            console.error('Nothing to submit, please type or upload image')
+            return
         }
         
-        try{
+
+        try {
             setLoading(true)
-            const response = await addComment(textInput);
             
-            if (response.status === 200){
+            const response = await addComment(textInput,selectedImages);
+
+            if (response.status === 201) {
                 setTextInput('');
+                setSelectedImages([])
                 onAdd();
-            }else{
+            } else {
                 console.error('failed to add new comment')
             }
-            
+
             setLoading(false)
-            
-        }catch(err){
+
+        } catch (err) {
             console.error('Error adding comment:', err);
             setLoading(false)
         }
     }
-    
+    const removeImage = (idx) => {
+        setSelectedImages(prev =>
+            // val and i 
+          prev.filter((_, i) => i !== idx)
+        )
+      }
+
     return (
         <div className='comment-submit'>
-            <textarea 
+            <textarea
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
-                className='submit-textarea'
+                className='submit-box'
                 placeholder="Write a comment..."
             />
+            <p className = "inputCount">{textInput.length}/500</p>
+           <label className='upload-btn'> 
+                <img src="/upload.png" alt="upload" className="upload-icon"/>
+                <input type="file" id="imageUpload" onChange = {handleImageUpload} accept="image/*" hidden/>
+
+
+            </label>
             
-            <button 
-                disabled={loading} 
+           
+            {selectedImages.length > 0 && (
+                    <div className="image-preview">
+                        {selectedImages.map((img, idx) => (
+                            <div key={idx}>
+                                <img src={img} alt={`Preview ${idx}`} />
+                                <button className="primary-btn" onClick={() => removeImage(idx)}>×</button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            <button
+                disabled={loading}
                 onClick={handleSubmit}
             >
                 {loading ? 'Submitting...' : 'Submit'}

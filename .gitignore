@@ -43,3 +43,11 @@ frontend/.pnp.js
 backend/.env
 backend/logs/
 backend/*.log
+
+BOBYARD_CHALLENGE_GUIDE.md
+
+LIVE_SESSION_PREP.md
+
+QUICK_FEATURES_30MIN.md
+
+POSTGRESQL_SETUP_GUIDE.md

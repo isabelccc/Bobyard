@@ -1,21 +1,119 @@
 
 .comment-item{
-    background:white;
-    border:1px solid lightgray;
-    border: radius 8px;
+    /* TODO: Remove duplicate border-radius - you have both 8px and 20px */
+    /* HINT: Keep only one: border-radius: 20px; (remove line 5) */
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     padding:16px;
+    background-color:white;
+
+
+    min-height: auto; /* TODO: Consider removing if not needed */
+    
 
 }
 .comment-header{
+    /* TODO: Consider reducing padding if comment-item already has padding */
+    /* HINT: comment-item has padding:16px, so this adds extra space */
+    /* HINT: Option: padding: 8px 16px; or remove if not needed */
+    padding: 16px;
 
 }
+.comment-text {
+    overflow-wrap: anywhere;   /* best */
+    
+  }
 .comment-author{
+ 
+    font-size: larger;
+    font-weight: 500;
+    padding-right: 5px;
 
 }
 .comment-date{
+    /* TODO: Fix 'size' property - should be 'font-size' */
+    /* HINT: Change 'size: 2px;' to 'font-size: 12px;' or 'font-size: 14px;' */
+    /* HINT: 'size' is not a valid CSS property */
+    color:darkolivegreen;
+    size: 2px; /* INVALID - should be font-size */
 
 }
 
-div{
+.comment-actions{
+    display: flex;
+    gap: 5px;
+    padding-top: 10px;
+}
+.primary-btn{
+    background:aliceblue;
+    border-radius: 10px;
+    border: 0cap;
+    padding:8px 8px;
+    cursor: pointer;
 
 }
+
+.primary-btn:hover{
+    background-color: lightcoral;
+
+}
+.collapse-btn {
+    background: transparent;
+    border: none;
+    color: #86878a;
+    font-weight: 500;
+    cursor: pointer;
+    padding:0px 8px 8px 8px;
+    border-radius: 10px;
+   
+  }
+
+.edit-box{
+    width: 90%;
+    min-height: 100px;
+    padding: 12px;
+    font-size: medium;
+    margin-right: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    border: 1px solid darkblue;
+  
+
+}
+.edit-container {
+    position: relative;
+    width: 90%;
+  }
+.charCount{
+    /* TODO: Fixed - Changed from absolute to relative positioning */
+    /* HINT: Absolute positioning requires parent with position: relative */
+    /* HINT: Using relative positioning instead - simpler and works without JSX changes */
+    position: absolute;
+    margin-bottom: 50px; 
+    margin-left: 0; /* Align with textarea */
+    font-size: 12px;
+    color: #666;
+    padding: 0;
+    /* Alternative: If you want it inside textarea (overlay), need parent div with position: relative */
+    /* HINT: Add className="edit-container" to parent div in JSX and use position: absolute */
+}
+
+.pin-btn{
+    padding:3px;
+    margin-left:10px;
+    background-color: transparent;
+    border-color: aliceblue;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+}
+.pin-btn:hover {
+    background: #f3f4f6;
+  }
+  .status-selector{
+    margin-left:10px;
+
+  }

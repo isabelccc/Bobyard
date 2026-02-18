@@ -1,65 +1,128 @@
 .comment-submit {
   background: white;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 16px;
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: lightblue;
+  position: relative;
+  
 }
 
-.submit-textarea {
-  width: 100%;
-  min-height: 100px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 1.5;
-  resize: vertical;
-  margin-bottom: 12px;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease;
+.submit-box{
+    width: 95%;
+    padding: 14px 110px 14px 14px;
+    min-height: 100px;
+    padding: 12px;
+    font-size: medium;
+    margin-right: 20px;
+    border-radius: 12px;
+
 }
 
-.submit-textarea:focus {
-  outline: none;
-  border-color: #1976d2;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+
+.upload-btn{
+    right: 145px; 
+    bottom: 30px;
+    position: absolute;
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
-.submit-textarea::placeholder {
-  color: #999;
+.upload-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.upload-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.inputCount{
+    left: 35px;
+    bottom: 30px;
+    position: absolute;
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: auto;
 }
 
 .comment-submit button {
-  padding: 10px 20px;
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+    right: 60px; 
+    bottom: 30px;
+    position: absolute;  
+    background:lightblue;
+    border-radius: 10px;
+    border: 0cap;
+    padding:8px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.comment-submit button:hover{
+    background-color: lightcoral;
+
+}
+.primary-btn {
+    background:white;
+    border-radius: 10px;
+    border: 0cap;
+    padding:8px 8px;
+    cursor: pointer;
 }
 
-.comment-submit button:hover:not(:disabled) {
-  background-color: #1565c0;
-  transform: translateY(-1px);
+/* Image preview container */
+.image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
 }
 
-.comment-submit button:active:not(:disabled) {
-  transform: translateY(0);
+.image-preview > div {
+    position: relative;
+    display: inline-block;
 }
 
-.comment-submit button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.6;
+.image-preview img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
 }
 
-.comment-submit button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.3);
+.image-preview button {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
+.image-preview button:hover {
+    background: #cc0000;
+}
+
+
+
