@@ -56,9 +56,9 @@ export default function CommentItem({ comment, onUpdate, onDelete, onLike }) {
 
     };
 
-    
 
-   
+
+
     return (
         <div className="comment-item">
             <div className="comment-header">
@@ -69,7 +69,7 @@ export default function CommentItem({ comment, onUpdate, onDelete, onLike }) {
                 <span className="comment-date"> {
                     new Date(comment.created_at).toLocaleString('en-US')}
                 </span>
-               
+
                 {isEditing ? (
                     <div>
                         <textarea value={editText}
@@ -108,7 +108,7 @@ export default function CommentItem({ comment, onUpdate, onDelete, onLike }) {
                         <span className='comment-likes'>
                             ❤️ {comment.likes}
                         </span>
-                        
+
                         <div className="comment-actions">
                             <button onClick={() => setIsEditing(true)} className='primary-btn'>Edit</button>
                             <button onClick={handleDelete} className="primary-btn">Delete</button>
