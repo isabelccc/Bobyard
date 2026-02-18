@@ -2,7 +2,7 @@
 
 ## 🟢 Easy Features (15-25 minutes)
 
-### Feature 1: Character Counter
+### Feature 1: Character Counter / done
 **Request:** "Add a character counter to the comment form showing remaining characters (max 500)"
 
 **What to implement:**
@@ -22,7 +22,7 @@
 
 ---
 
-### Feature 2: Sort Comments
+### Feature 2: Sort Comments / done
 **Request:** "Add a dropdown to sort comments by 'Newest', 'Oldest', or 'Most Liked'"
 
 **What to implement:**
@@ -44,7 +44,7 @@
 
 ---
 
-### Feature 3: Comment Timestamp Format
+### Feature 3: Comment Timestamp Format / done
 **Request:** "Show relative time (e.g., '2 hours ago') instead of full date"
 
 **What to implement:**
@@ -65,7 +65,7 @@
 
 ## 🟡 Medium Features (25-35 minutes)
 
-### Feature 4: Search Comments
+### Feature 4: Search Comments 
 **Request:** "Add a search bar to filter comments by text content"
 
 **What to implement:**

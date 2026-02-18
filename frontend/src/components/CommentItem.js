@@ -1,11 +1,12 @@
 import React , {useState, useEffect} from 'react';
 import './CommentItem.css';
-import { editComment, deleteComment, toggleLike, addComment } from '../services/api';
+import { editComment, deleteComment, toggleLike } from '../services/api';
 import CommentForm from './CommentForm';
 
 export default function CommentItem({comment, onUpdate, onDelete,onLike}){
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(comment.text)
+    const [isLikedByMe, setIsLikedByMe] = useState(false);
     const handleSave= async()=>{
         try{
             // id passed in prop
@@ -18,21 +19,18 @@ export default function CommentItem({comment, onUpdate, onDelete,onLike}){
 
         }
     }
-    const [isLiked, setIsLiked] = useState(comment.likes > 0);
-    
-    // Sync isLiked state when comment prop changes
-    useEffect(() => {
-        setIsLiked(comment.likes > 0);
-    }, [comment.likes]);
+   
     
     const handleLike = async() => {
         try{
             // Fix typo: reponse -> response
-            const response = await toggleLike(comment.id)
-            const newLikesCount = response.data.likes
-            onLike(comment.id, newLikesCount)
-            // Update isLiked state based on new likes count (handles both true and false)
-            setIsLiked(newLikesCount > 0)
+            const action = isLikedByMe? 'like':"unlike";
+            const response = await toggleLike(comment.id, action);
+         
+            onLike(comment.id, response.data.likes)
+            setIsLikedByMe((prev)=> !prev);
+            
+           
         }catch(err){
             console.error('Failed to handle like count', err)
         }
@@ -88,7 +86,7 @@ export default function CommentItem({comment, onUpdate, onDelete,onLike}){
                 ):(
                     <p className = "comment-text">{comment.text}</p>
                 )}
-                {comment.image && comment.images.length > 0 &&(
+                {comment.images.length > 0 &&(
                     <div className='comment-images'>
                     {comment.images.map((img,idx)=>(
                             <img key = {idx} src= {img} alt = {`Comment ${idx}`}/>
@@ -105,7 +103,7 @@ export default function CommentItem({comment, onUpdate, onDelete,onLike}){
                             <button onClick = {()=> setIsEditing(true) } className = "primary-btn">Edit</button>
                             <button onClick ={handleDelete} className ="primary-btn">Delete</button>
                             <button onClick = {handleLike} className = "primary-btn">
-                                {isLiked ? 'Unlike' : 'Like'}
+                                { isLikedByMe? 'Unlike' : 'Like'}
                             </button>
                             <button className='primary-btn' onClick = {handleReply}> Reply</button>
                         </div>

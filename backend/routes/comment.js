@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
             `INSERT INTO comments(text, author,images,likes, parent_id)
              VALUES($1, $2, $3, $4, $5)
              RETURNING *`,
-            [text, author || 'Admin', images || [], likes || 0, parent_id || null]
+            [text, author || 'Admin', images || [], likes || 1, parent_id || null]
         );
 
         res.json({
@@ -70,7 +70,10 @@ router.post('/', async (req, res) => {
 router.put('/:id/like', async (req, res) => {
     try {
         const id = req.params.id;
-
+        const action = req.body.action
+        if (!['like', 'unlike'].includes(action)) {
+            return res.status(400).json({ error: 'Action must be like or unlike' });
+          }
         // Get current likes
         const current = await pool.query(
             'SELECT likes FROM comments WHERE id = $1',
@@ -83,9 +86,11 @@ router.put('/:id/like', async (req, res) => {
             });
         }
 
-        const currentLikes = current.rows[0].likes;
-        // Toggle: if 0, make it 1; if > 0, make it 0
-        const newLikes = currentLikes === 0 ? 1 : 0;
+        
+        const currentLikes = Number(current.rows[0].likes) || 0;
+const newLikes = action === 'like'
+  ? currentLikes + 1
+  : Math.max(0, currentLikes - 1);
 
         const result = await pool.query(
             `UPDATE comments 
@@ -140,7 +145,10 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        const id = req.params.id
+        console.log("params:", req.params);
+        console.log("body:", req.body);
+        
+        const id = req.body.id
         const result = await pool.query(
             `
         DELETE FROM comments

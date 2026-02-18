@@ -18,8 +18,8 @@ export const addComment = (text, images, parent_id) => {
         );
     }
 };
-export const toggleLike = (id) => {
-    return axios.put(`${API_URL}/comments/${id}/like`);
+export const toggleLike = (id, action) => {
+    return axios.put(`${API_URL}/comments/${id}/like`, {action});
 }
 
 export const editComment = (id, text) => {

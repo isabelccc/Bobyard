@@ -53,6 +53,22 @@
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 
 }
+.comment-images{
+    display: flex;
+ 
+    flex-wrap: wrap; 
+   
+    flex-direction: column; 
+    max-width: 600px; 
+ 
+}
+.comment-images img {
+    max-width: 100%;   /* ⭐ key fix */
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+    display: block;
+}
 
 .comment-actions{
     display: flex;
