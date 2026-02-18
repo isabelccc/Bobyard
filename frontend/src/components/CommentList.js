@@ -1,5 +1,5 @@
-import React, { useState, useEffect , useMemo} from 'react'
-import { getComments, togglePin, updateStatus } from '../services/api'
+import React, { useState, useEffect } from 'react'
+import { getComments } from '../services/api'
 import CommentItem from './CommentItem'
 import CommentForm from './CommentForm'
 import "./CommentList.css"
@@ -36,22 +36,6 @@ function CommentList() {
         fetchComments()
     }, [])
 
-    const handlePin = async(id) => {
-        await togglePin(id);
-        fetchComments();
-      };
-      const handleStatus = async(id, status)=>{
-        try{
-            await updateStatus(id, status);
-            fetchComments();
-
-        }
-        catch(err){
-            console.error(err)
-        }
-    }
-
- 
     if (loading) {
         return <div>Loading...</div>
     }
@@ -67,8 +51,6 @@ function CommentList() {
                         onUpdate={fetchComments}
                         onDelete={fetchComments}
                         onLike={handleLike}
-                        onPin = {handlePin}
-                        onStatus = {handleStatus}
                     />
                 ))
             }

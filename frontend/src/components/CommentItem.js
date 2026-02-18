@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './CommentItem.css';
-import { editComment, deleteComment, toggleLike, updateStatus } from '../services/api';
+import { editComment, deleteComment, toggleLike } from '../services/api';
 
 export default function CommentItem({ comment, onUpdate, onDelete, onLike }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(comment.text);
-    const isLong = comment.text.length > 200;
-    const [collapsed, setCollapse] = useState(true);
 
     const handleSave = async () => {
         // Check if text exists or images array has items
@@ -90,18 +88,9 @@ export default function CommentItem({ comment, onUpdate, onDelete, onLike }) {
                     </div>
                 ) : (
                     <>
-
                         <p className="comment-text">
-                            {isLong & collapsed ? comment.text.slice(0, 200) + '...' : comment.text}
-
+                            {comment.text}
                         </p>
-                        {isLong &&
-                            <button className='collapse-btn ' onClick={() => setCollapse(prev => !prev)}>
-                                {collapsed ? "Read More" : "Show Less"}
-                            </button>}
-
-
-
                     </>
 
                 )}

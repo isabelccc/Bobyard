@@ -69,7 +69,6 @@ export default function CommentForm({ onAdd }) {
                 className='submit-box'
                 placeholder="Write a comment..."
             />
-            <p className = "inputCount">{textInput.length}/500</p>
            <label className='upload-btn'> 
                 <img src="/upload.png" alt="upload" className="upload-icon"/>
                 <input type="file" id="imageUpload" onChange = {handleImageUpload} accept="image/*" hidden/>

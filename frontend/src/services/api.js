@@ -21,11 +21,3 @@ export const editComment = (id, text)=>{
 export const deleteComment = (id)=>{
     return axios.delete(`${API_URL}/comments/${id}`);
 };
-
-export const togglePin = (id)=>{
-    return axios.patch(`${API_URL}/comments/${id}/pin`)
-}
-
-export const updateStatus = (id, status) =>{
-    return axios.patch(`${API_URL}/comments/${id}/status`,{status})
-}
