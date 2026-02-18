@@ -1,0 +1,15 @@
+.comment-list {
+    width: min(920px, 92vw);
+    margin: 0 auto;
+    padding: 12px 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.comment-list h2 {
+    margin: 0 0 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+}

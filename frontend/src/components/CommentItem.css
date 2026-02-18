@@ -1,7 +1,6 @@
 
 .comment-item{
-    /* TODO: Remove duplicate border-radius - you have both 8px and 20px */
-    /* HINT: Keep only one: border-radius: 20px; (remove line 5) */
+   
     border: 1px solid rgba(0,0,0,0.08);
     border-radius: 8px;
     
@@ -10,21 +9,35 @@
     background-color:white;
 
 
-    min-height: auto; /* TODO: Consider removing if not needed */
     
 
 }
 .comment-header{
-    /* TODO: Consider reducing padding if comment-item already has padding */
-    /* HINT: comment-item has padding:16px, so this adds extra space */
-    /* HINT: Option: padding: 8px 16px; or remove if not needed */
+    
     padding: 16px;
 
 }
 .comment-text {
-    overflow-wrap: anywhere;   /* best */
+    overflow-wrap: anywhere;  
     
   }
+.comment-images{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    max-width: 100%;
+}
+
+.comment-images img{
+    display: block;
+    width: min(100%, 520px);
+    max-width: 100%;
+    max-height: 320px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
 .comment-author{
  
     font-size: larger;
@@ -33,11 +46,9 @@
 
 }
 .comment-date{
-    /* TODO: Fix 'size' property - should be 'font-size' */
-    /* HINT: Change 'size: 2px;' to 'font-size: 12px;' or 'font-size: 14px;' */
-    /* HINT: 'size' is not a valid CSS property */
+  
     color:darkolivegreen;
-    size: 2px; /* INVALID - should be font-size */
+    font-size: 2px; 
 
 }
 
@@ -86,19 +97,7 @@
     position: relative;
     width: 90%;
   }
-.charCount{
-    /* TODO: Fixed - Changed from absolute to relative positioning */
-    /* HINT: Absolute positioning requires parent with position: relative */
-    /* HINT: Using relative positioning instead - simpler and works without JSX changes */
-    position: absolute;
-    margin-bottom: 50px; 
-    margin-left: 0; /* Align with textarea */
-    font-size: 12px;
-    color: #666;
-    padding: 0;
-    /* Alternative: If you want it inside textarea (overlay), need parent div with position: relative */
-    /* HINT: Add className="edit-container" to parent div in JSX and use position: absolute */
-}
+
 
 .pin-btn{
     padding:3px;

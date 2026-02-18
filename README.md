@@ -1,4 +1,4 @@
-#Comment System
+# Comment System
 
 Simple full-stack comment application built with React, Express, and PostgreSQL.
 
@@ -13,6 +13,8 @@ Simple full-stack comment application built with React, Express, and PostgreSQL.
 - Create comments with text and optional images
 - Edit and delete comments
 - Toggle like/unlike
+- Paginated comments API (`page`, `limit`)
+- Seed data from `comments.json`
 
 ## Project Structure
 
@@ -21,6 +23,7 @@ bobyard/
   backend/
     config/
     controllers/
+    scripts/
     routes/
     server.js
   frontend/
@@ -44,6 +47,13 @@ CREATE DATABASE comments_db;
 ```
 
 The backend will auto-create the `comments` table on startup (`CREATE TABLE IF NOT EXISTS ...` in `backend/server.js`).
+
+Optional: load demo data from `comments.json`:
+
+```bash
+cd backend
+npm run seed
+```
 
 ## 2) Environment Variables
 
@@ -88,6 +98,13 @@ cd backend
 npm run dev
 ```
 
+Seed database (optional, resets comments table):
+
+```bash
+cd backend
+npm run seed
+```
+
 Start frontend in another terminal:
 
 ```bash
@@ -122,8 +139,33 @@ Create comment:
 }
 ```
 
+### Example list response
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "text": "Hello world",
+      "author": "Admin",
+      "likes": 3,
+      "images": [],
+      "created_at": "2026-02-16T12:00:00.000Z",
+      "updated_at": "2026-02-16T12:00:00.000Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 16,
+    "totalPages": 2
+  }
+}
+```
+
 ## Notes
 
 - If `psql -U <user>` fails with `database "<user>" does not exist`, connect to a known database instead:
   - `psql -U <user> -d postgres`
+- `npm run seed` truncates and reseeds `comments` (it is not append mode).
 

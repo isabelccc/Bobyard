@@ -50,13 +50,20 @@ const createComment = async (req, res) => {
 const toggleLike = async (req, res) => {
   try {
     const id = req.params.id;
+    const { action } = req.body || {};
+
+    if (!['like', 'unlike'].includes(action)) {
+      return res.status(400).json({ error: 'Action must be like or unlike' });
+    }
+
     const current = await pool.query('SELECT likes FROM comments WHERE id = $1', [id]);
 
     if (current.rows.length === 0) {
       return res.status(404).json({ error: 'Comment not found' });
     }
 
-    const newLikes = current.rows[0].likes === 0 ? 1 : 0;
+    const currentLikes = Number(current.rows[0].likes) || 0;
+    const newLikes = action === 'like' ? currentLikes + 1 : Math.max(0, currentLikes - 1);
 
     const result = await pool.query(
       `UPDATE comments

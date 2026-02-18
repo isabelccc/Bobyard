@@ -5,6 +5,11 @@ import { editComment, deleteComment, toggleLike } from '../services/api';
 export default function CommentItem({ comment, onUpdate, onDelete, onLike }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(comment.text);
+    const [isLikedByMe, setIsLikedByMe] = useState(false);
+
+    useEffect(() => {
+        setIsLikedByMe(false);
+    }, [comment.id]);
 
     const handleSave = async () => {
         // Check if text exists or images array has items
@@ -24,21 +29,13 @@ export default function CommentItem({ comment, onUpdate, onDelete, onLike }) {
         }
     }
 
-
-    const [isLiked, setIsLiked] = useState(comment.likes > 0);
-
-    // Sync isLiked state when comment prop changes
-    useEffect(() => {
-        setIsLiked(comment.likes > 0);
-    }, [comment.likes]);
-
     const handleLike = async () => {
         try {
-
-            const response = await toggleLike(comment.id)
+            const action = isLikedByMe ? 'unlike' : 'like';
+            const response = await toggleLike(comment.id, action)
             const newLikesCount = response.data.likes
             onLike(comment.id, newLikesCount)
-            setIsLiked(newLikesCount > 0)
+            setIsLikedByMe(prev => !prev)
         } catch (err) {
             console.error('Failed to handle like count', err)
         }
@@ -116,7 +113,7 @@ export default function CommentItem({ comment, onUpdate, onDelete, onLike }) {
                             <button onClick={() => setIsEditing(true)} className='primary-btn'>Edit</button>
                             <button onClick={handleDelete} className="primary-btn">Delete</button>
                             <button onClick={handleLike} className="primary-btn">
-                                {isLiked ? 'Unlike' : 'Like'}
+                                {isLikedByMe ? 'Unlike' : 'Like'}
                             </button>
 
                         </div>
