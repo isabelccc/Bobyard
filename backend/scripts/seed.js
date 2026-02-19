@@ -28,7 +28,7 @@ async function seedComments() {
       const text = (item.text || '').trim();
       const author = (item.author || 'Admin').trim();
       const likes = Number.isFinite(Number(item.likes)) ? Number(item.likes) : 0;
-      const createdAt = item.date ? new Date(item.date) : new Date();
+      const createdAt = item.date ? new Date(item.likes) : new Date();
       const images = item.image && item.image.trim() !== '' ? [item.image.trim()] : [];
 
       if (!text) {

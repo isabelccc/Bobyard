@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
             'SELECT * FROM comments ORDER BY created_at DESC'
         ) :
             await pool.query(
-                'SELECT * FROM comments WHERE parent_id = $1 ORDER BY created_at DESC',
+                'SELECT * FROM comments WHERE id = $1 ORDER BY created_at DESC',
                 [parent_id]
             )
         res.json(result.rows);
@@ -31,6 +31,7 @@ router.get('/', async (req, res) => {
 // POST /comments - Add new comment
 
 router.post('/', async (req, res) => {
+    console.log(req.body)
     try {
         const {
             text,
@@ -49,7 +50,7 @@ router.post('/', async (req, res) => {
             `INSERT INTO comments(text, author,images,likes, parent_id)
              VALUES($1, $2, $3, $4, $5)
              RETURNING *`,
-            [text, author || 'Admin', images || [], likes || 1, parent_id || null]
+            [text, author || 'Admin', images || [], likes || 1, parent_id || 0]
         );
 
         res.json({
@@ -124,7 +125,7 @@ router.put('/:id', async (req, res) => {
             updated_at = NOW()
             WHERE id = $2
             RETURNING *`,
-            [text, id]
+            [id, text]
         )
         if (result.rows.length === 0) {
             return res.status(404).json({
@@ -145,10 +146,9 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        console.log("params:", req.params);
-        console.log("body:", req.body);
+       
         
-        const id = req.body.id
+        const id = req.params.id
         const result = await pool.query(
             `
         DELETE FROM comments
